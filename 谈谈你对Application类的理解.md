@@ -2,29 +2,29 @@
 
 其实说对什么的理解，就是考察你对这个东西会不会用，重点是有没有什么坑！
 
-首先，Application在一个Dalvik虚拟机里面只会存在一个实例，所以你不要傻傻的去弄什么单例模式，来静态获取Application了，你把Application构造函数设置成privete都不可能实现(我年轻的时候就这么傻傻的试过，想着如果可以通过```Singleton.getInstance()```就能获取到Application对象，多爽呀~)。
+- 首先，Application在一个Dalvik虚拟机里面只会存在一个实例，所以你不要傻傻的去弄什么单例模式，来静态获取Application了，你把Application构造函数设置成privete都不可能实现(我年轻的时候就这么傻傻的试过，想着如果可以通过```Singleton.getInstance()```就能获取到Application对象，多爽呀~)。
 
 那么为什么强调说是一个Dalvik虚拟机，而不是说一个App呢？
 
 因为一个App有可能有多个Dalvik虚拟机，也就是传说中的多进程模式。在这种模式下，每一个Dalvik都会存在一个Application实例，他们之间没有关系，在A进程Application里面保存的数据不能在B进程的Application获取，因为他们根本不是一个对象，而且被隔离在了两个进程里面，所以这里强调是一个Dalvik虚拟机，而不是一个App。
 
-其次，Application的实质是一个Context，它继承自ContextWrapper。
+- 其次，Application的实质是一个Context，它继承自ContextWrapper。
 
 ```
 	android.content.Context
  	   ↳	android.content.ContextWrapper
- 	   	↳android.app.Application	   	
+ 	   	↳	android.app.Application	   	
 ```
 
 ContextWrapper是什么玩意？就是对Context的一个包装而已。
 
-Application有两个子类，一个是MultiDexApplication，如果你遇到了"65535"问题，可以选择继承自他，完成多Dex打包配置的相关工作。
+- Application有两个子类，一个是MultiDexApplication，如果你遇到了"65535"问题，可以选择继承自他，完成多Dex打包配置的相关工作。
 
 另外一个是在TDD(测试用例驱动)开发模式中使用Moke进行测试的时候用到的，可以来代替Application的Moke类MockApplication。
 
-在应用启动的时候，会首先调用```Application.attach()```，当然，这个方法是隐藏的，开发者能接触到的第一个被调用的方法其实是```Application.onCreate()```，我们通常会在这个方法里面完成各种初始化，比如图片加载库、Http请求库的默认配置初始化操作等等。但是最好别在这个方法里面进行太多耗时操作，因为这会影响App的启动速度，所以对于不必要的操作可以使用异步操作、懒加载、延时加载等策略来减少对UI线程的影响。
+- 在应用启动的时候，会首先调用```Application.attach()```，当然，这个方法是隐藏的，开发者能接触到的第一个被调用的方法其实是```Application.onCreate()```，我们通常会在这个方法里面完成各种初始化，比如图片加载库、Http请求库的默认配置初始化操作等等。但是最好别在这个方法里面进行太多耗时操作，因为这会影响App的启动速度，所以对于不必要的操作可以使用异步操作、懒加载、延时加载等策略来减少对UI线程的影响。
 
-除此之外，由于在Context中可以通过getApplicationContext()获取到Application对象，或者是通过```Activity.getApplication()```、```Service.getApplication()```获取到Application，所以可以在Application保存全局的数据，供所有的Activity或者是Service使用。
+- 除此之外，由于在Context中可以通过getApplicationContext()获取到Application对象，或者是通过```Activity.getApplication()```、```Service.getApplication()```获取到Application，所以可以在Application保存全局的数据，供所有的Activity或者是Service使用。
 
 PS：使用上面的三种方法获取到的都是同一个Application对象，getApplicationContext()是在Context的实现类ContextImpl中具体实现的，而getApplication()则是在Activity和Service中单独实现的，所以他们的作用域不同，但是获取到的都是同一个Application对象，因为一个Dalvik虚拟机只有一个Application对象。
 
@@ -32,9 +32,9 @@ PS：使用上面的三种方法获取到的都是同一个Application对象，g
 
 所以当你想在Application保存数据的时候，请做好为空判断，或者是选择其他方式保存你的数据信息。
 
-另外，在Application中存在着几个有用的方法，比如onLowMemory()和onTrimMemory()，在这两个方法里面，我们可以实现自己的内存回收逻辑，比如关闭数据库连接、移除图片内存缓存等操作来降低内存消耗，从而降低被系统回收的风险。
+- 另外，在Application中存在着几个有用的方法，比如onLowMemory()和onTrimMemory()，在这两个方法里面，我们可以实现自己的内存回收逻辑，比如关闭数据库连接、移除图片内存缓存等操作来降低内存消耗，从而降低被系统回收的风险。
 
-最后，就是要注意Application的生命周期，他和Dalvik虚拟机生命周期一样长，所以在进行单例或者是静态变量的初始化操作时，一定要用Application作为Context进行初始化，否则会造成内存泄露的发生。
+- 最后，就是要注意Application的生命周期，他和Dalvik虚拟机生命周期一样长，所以在进行单例或者是静态变量的初始化操作时，一定要用Application作为Context进行初始化，否则会造成内存泄露的发生。
 
 #更多参考资料
 
