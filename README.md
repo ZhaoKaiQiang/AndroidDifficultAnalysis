@@ -1,5 +1,5 @@
-# AndroidDifficultAnalysis
-
+# Android Difficult Analysis
+Android 重难点解析
 ---
 
 安卓开发中遇到的重难点解析，也包括平常的读书笔记、知识点整理、面试题目等。
@@ -27,4 +27,5 @@
 - 一部【iPhone6】，人家就是...抱着批判的态度...用的！知彼知己，百战百胜！只有知道了iPhone的流畅，我们才能开发出流畅、漂亮的Android应用嘛！你说对吧！
 
 我的CSDN博客：[http://blog.csdn.net/zhaokaiqiang1992](http://blog.csdn.net/zhaokaiqiang1992)
+
 我的微博：[裸奔的凯子哥](http://weibo.com/zhaokaiqiang1992)，每天会不定时分享高质量博客，欢迎关注
