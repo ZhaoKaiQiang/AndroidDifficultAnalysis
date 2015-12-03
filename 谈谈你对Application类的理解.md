@@ -12,7 +12,7 @@
 
 ---
 
-- 其次，Application的实质是一个Context，它继承自ContextWrapper。
+其次，Application的实质是一个Context，它继承自ContextWrapper。
 
 ```
 	android.content.Context
