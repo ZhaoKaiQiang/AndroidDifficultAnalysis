@@ -46,9 +46,14 @@ PS：使用上面的三种方法获取到的都是同一个Application对象，g
 
 ---
 
-最后，就是要注意Application的生命周期，他和Dalvik虚拟机生命周期一样长，所以在进行单例或者是静态变量的初始化操作时，一定要用Application作为Context进行初始化，否则会造成内存泄露的发生。
+最后，就是要注意Application的生命周期，他和Dalvik虚拟机生命周期一样长，所以在进行单例或者是静态变量的初始化操作时，一定要用Application作为Context进行初始化，否则会造成内存泄露的发生。使用Dialog的时候一般使用Activity作为Context，但是也可以使用Application作为上下文，前提是你必须设置Window类型为TYPE_SYSTEM_DIALOG，并且申请相关权限。这个时候弹出的Dialog是属于整个Application的，弹出这个Dialog的Activity销毁时也不会回收Dialog，只有在Application销毁时，这个Dialog才会自动消失。
 
 #更多参考资料
 
 - [不要在Android的Application对象中缓存数据!](http://zmywly8866.github.io/2014/12/26/android-do-not-store-data-in-the-application-object.html)
 - [Android Context 是什么？](http://blog.csdn.net/feiduclear_up/article/details/47356289)
+
+#关于我
+
+- 我的CSDN博客：[http://blog.csdn.net/zhaokaiqiang1992](http://blog.csdn.net/zhaokaiqiang1992)
+- 我的微博：[裸奔的凯子哥](http://weibo.com/zhaokaiqiang1992)，每天会不定时分享高质量博客，欢迎关注
