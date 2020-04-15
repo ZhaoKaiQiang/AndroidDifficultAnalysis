@@ -16,6 +16,4 @@ __内容上避免有不足甚至是错误，恳请各位发现之后提交issue�
 
 我的微博：[裸奔的凯子哥](http://weibo.com/zhaokaiqiang1992)，每天会不定时分享高质量博客，欢迎关注
 
-微信公众账号：kaizige1992
-
 ![](http://i12.tietuku.com/f55c34ddb1ba3830.jpg)
